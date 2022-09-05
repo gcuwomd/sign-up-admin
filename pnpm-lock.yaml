@@ -4,6 +4,8 @@ specifiers:
   '@vicons/ionicons5': ^0.12.0
   '@vitejs/plugin-vue': ^3.0.3
   axios: ^0.27.2
+  chart.js: ^3.9.1
+  chartist: ^1.1.2
   jest: ^29.0.1
   naive-ui: ^2.32.2
   pinia: ^2.0.21
@@ -19,6 +21,8 @@ specifiers:
 
 dependencies:
   axios: registry.npmmirror.com/axios/0.27.2
+  chart.js: registry.npmmirror.com/chart.js/3.9.1
+  chartist: registry.npmmirror.com/chartist/1.1.2
   naive-ui: registry.npmmirror.com/naive-ui/2.32.2_vue@3.2.37
   pinia: registry.npmmirror.com/pinia/2.0.21_bw4xur2vyhvhfd4whxbr7emp4u
   vicons: registry.npmmirror.com/vicons/0.0.1
@@ -1476,6 +1480,19 @@ packages:
     version: 1.0.2
     engines: {node: '>=10'}
     dev: true
+
+  registry.npmmirror.com/chart.js/3.9.1:
+    resolution: {integrity: sha512-Ro2JbLmvg83gXF5F4sniaQ+lTbSv18E+TIf2cOeiH1Iqd2PGFOtem+DUufMZsCJwFE7ywPOpfXFBwRTGq7dh6w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/chart.js/-/chart.js-3.9.1.tgz}
+    name: chart.js
+    version: 3.9.1
+    dev: false
+
+  registry.npmmirror.com/chartist/1.1.2:
+    resolution: {integrity: sha512-ccz4ob0rkW6ayxmge3CYkNhwiKLhmz9u2j8WCJw0MUbtQavGuL2KX0GrVntkohSSBgqogqeANFPIigeGrFoTKQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/chartist/-/chartist-1.1.2.tgz}
+    name: chartist
+    version: 1.1.2
+    engines: {node: '>=14'}
+    dev: false
 
   registry.npmmirror.com/chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/chokidar/-/chokidar-3.5.3.tgz}

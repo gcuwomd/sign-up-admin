@@ -3,13 +3,11 @@ import {
   createWebHashHistory,
   onBeforeRouteLeave,
 } from "vue-router";
-import Login from "./../view/Login/Login.vue";
-import Index from "../view/Index/Index.vue"
-import NotFound from "./../page/404.vue";
+
 const routes = [
   {
     path: "/",
-    component: Login,
+    component: () => import("./../view/Login/Login.vue"),
     name: "Login",
     meta: {
       position: "Login",
@@ -18,16 +16,45 @@ const routes = [
   {
     path: "/index",
     name: "Index",
-    component:Index,
+    component: () => import("../view/Index/Index.vue"),
     meta: {
       position: "Index",
-    }
-  }
-  ,
+    },
+    children: [
+      // 统计
+      {
+        path: "statistics",
+        name: "Statistics",
+        component: () => import("./../view/statistics/Statistics.vue"),
+        meta:{
+          position: "Statistics",
+        }
+      },
+      // 表单数据
+      {
+        path: "data",
+        name: "FormData",
+        component: () =>import("./../view/FormData/FormData.vue"),
+        meta: {
+          position: "FormData"
+        }
+      },
+      // 关于
+      {
+        path: "about",
+        name: "About",
+        component: () =>import("./../view/About/about.vue"),
+        meta: {
+          position: "About"
+        }
+      },
+    ],
+  },
+  // 404 页
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
-    component: NotFound,
+    component: () => import("./../page/404.vue"),
   },
 ];
 
@@ -37,7 +64,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  console.log(to);
+
 });
 
 export { router };
