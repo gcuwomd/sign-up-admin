@@ -1,13 +1,6 @@
 <template>
   <n-space vertical>
     <div class="container">
-      <n-layout>
-        <n-layout-header bordered>
-          <n-h2>
-            <n-text>Hi~网信委·网站运维部</n-text>
-          </n-h2>
-        </n-layout-header>
-      </n-layout>
       <n-layout has-sider class="container-body" sider-placement="left">
         <n-layout-sider
           :collapsed-width="60"
@@ -39,16 +32,13 @@ import menuOptions from "./menu.config";
 .container {
   height: 100vh;
 
-  .n-layout-header {
-    height: 57px;
-  }
-
   .n-layout-sider {
-    height: calc(100vh - 57px);
+    height: 100vh;
   }
 
   .content-page {
-    padding: 23px 40px 0 20px;
+    height: 100vh;
+    padding: 51px 20px;
     background-color: #f6f9f8;
   }
 }
