@@ -21,6 +21,8 @@
           :columns="tableHead"
           :data="tableData"
           :pagination="pagination"
+          max-height="90%"
+          :scroll-x="1800"
         />
       </n-layout-content>
     </n-layout>

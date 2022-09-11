@@ -68,6 +68,7 @@ export const createTableHead = ({
     {
       title: "姓名",
       key: "name",
+      fixed:"left",
       align:"center"
     },
     {
@@ -78,6 +79,7 @@ export const createTableHead = ({
     {
       title: "学院",
       key: "department",
+      width:220,
       align:"center"
     },
     {
@@ -124,6 +126,7 @@ export const createTableHead = ({
     {
       title: "操作",
       key: "operation",
+      fixed: 'right',
       align:"center",
       render(row) {
         return row.operationConfig.map(operation =>{
