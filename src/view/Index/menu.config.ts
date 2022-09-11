@@ -3,7 +3,6 @@ import type { MenuOption } from "naive-ui";
 import { NIcon } from "naive-ui";
 import { RouterLink } from "vue-router";
 import {
-  PodiumOutline as statistics,
   FileTrayFullOutline as data,
   AlertCircleOutline as about,
 } from "@vicons/ionicons5";
@@ -14,20 +13,6 @@ function renderIcon(icon: Component) {
 }
 
 const menuOptions: MenuOption[] = [
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: {
-            name: "Statistics",
-          },
-        },
-        { default: () => "统计" }
-      ),
-    key: "statistics",
-    icon: renderIcon(statistics),
-  },
   {
     label: () =>
       h(

@@ -14,6 +14,14 @@
           />
           <n-button type="success" @click="onRest"> 重置 </n-button>
           <n-button type="info" @click="onExportExcelFile"> 一键导出 </n-button>
+          <n-button color="#ff69b4">
+            <template #icon>
+              <n-icon>
+                <statistics></statistics>
+              </n-icon>
+            </template>
+            统计</n-button
+          >
         </n-space>
       </n-layout-header>
       <n-layout-content content-style="padding: 24px;">
@@ -44,6 +52,7 @@ import { operationConfig } from "./formData.config";
 // 导入选择器配置
 import { options, createTableHead } from "./formData.config";
 import { IFormData, IBackFormData } from "./data.type";
+import { PodiumOutline as statistics } from "@vicons/ionicons5";
 
 const message = useMessage(); // 消息提醒
 
