@@ -1,9 +1,12 @@
-import {BaseAxios} from "./../../axios/base_axios"
-
-function getcode(){
-    BaseAxios.get("/getcode").then((response) => {
-        console.log(response);
-        
-    })
+import BaseAxios from "./../../axios/base_axios"
+import {ILoginForm} from "./login.model"
+import ResHelper from "../../axios/ResHelper"
+// Admin 账户登录
+function login(loginForm: ILoginForm){
+    return BaseAxios.post("/login",{
+        username:loginForm.account,
+        password:loginForm.password
+    }).then(ResHelper)
 }
-export {getcode}
+
+export {login}

@@ -57,10 +57,14 @@
 <script lang="ts" setup>
 import { ref, Ref } from "vue";
 import { useRouter } from "vue-router";
+import { FormInst, useMessage } from "naive-ui";
 import { ILoginForm } from "./login.model";
+import { login } from "./login.api";
 import { GlassesOutline, Glasses } from "@vicons/ionicons5";
 
 const router = useRouter();
+const message = useMessage();
+const formRef = ref<FormInst | null>(null);
 
 let formValue: Ref<ILoginForm> = ref({
   account: "",
@@ -79,9 +83,24 @@ const rules = {
     trigger: "blur",
   },
 };
+
 // 点击登录
-function handleClickLogin() {
-  router.push({ name: "Index" });
+function handleClickLogin(e: MouseEvent) {
+  e.preventDefault();
+  formRef.value?.validate((errors) => {
+    if (!errors) {
+      login(formValue.value)
+        .then((res) => {
+          message.success("登录成功！");
+          router.push({ name: "Index" });
+        })
+        .catch((err) => {
+          message.error("登录验证失败！");
+        });
+    } else {
+      message.warning("用户名和密码不能为空！");
+    }
+  });
 }
 </script>
 
