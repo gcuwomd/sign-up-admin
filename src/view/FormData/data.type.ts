@@ -17,3 +17,15 @@ export interface IFormData {
 export interface IBackFormData extends IFormData {
     bool:any
 }
+
+export interface IStatisticData{
+    headcount:number,
+    man:number,
+    woman:number,
+    department?:[{
+        name:string,
+        count:number,
+    }]
+    intention1?:[string,number],
+    intention2?:[string,number],
+}

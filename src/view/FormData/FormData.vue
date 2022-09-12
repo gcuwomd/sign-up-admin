@@ -14,7 +14,7 @@
           />
           <n-button type="success" @click="onRest"> 重置 </n-button>
           <n-button type="info" @click="onExportExcelFile"> 一键导出 </n-button>
-          <n-button color="#ff69b4">
+          <n-button color="#ff69b4" @click="onStatistics">
             <template #icon>
               <n-icon>
                 <statistics></statistics>
@@ -36,11 +36,13 @@
     </n-layout>
   </n-space>
   <detail-dialog ref="detailDialog" :rowData="currentRowData"></detail-dialog>
+  <statistics-drawer ref="statisticsDrawer" :statisticsData="statisticsData"></statistics-drawer>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, Ref } from "vue";
+import { ref, onMounted, Ref,nextTick } from "vue";
 import { useMessage } from "naive-ui";
 import DetailDialog from "./DetailDialog.vue";
+import StatisticsDrawer from "./../Statistics/statistics.vue";
 import {
   getAllData,
   getPicture,
@@ -51,7 +53,7 @@ import {
 import { operationConfig } from "./formData.config";
 // 导入选择器配置
 import { options, createTableHead } from "./formData.config";
-import { IFormData, IBackFormData } from "./data.type";
+import { IFormData, IBackFormData,IStatisticData } from "./data.type";
 import { PodiumOutline as statistics } from "@vicons/ionicons5";
 
 const message = useMessage(); // 消息提醒
@@ -67,10 +69,19 @@ let selectValue = ref("第一志愿部门");
 let searchValue = ref("");
 // 详细弹窗
 let detailDialog = ref();
+// 统计抽屉
+let statisticsDrawer = ref();
 // 数据表数据
-let tableData = ref();
+let tableData:Ref<IFormData[]|undefined> = ref();
+// 统计数据
+let statisticsData:Ref<IStatisticData> =ref({
+  headcount:0,
+  man:0,
+  woman:0
+});
 
 let currentRowData: Ref<Array<IFormData> | null> = ref(null);
+
 
 const tableHead = createTableHead({
   // 打开查看详细信息
@@ -129,11 +140,28 @@ function onExportExcelFile() {
   });
 }
 
+// 点击统计
+function onStatistics() {
+  statisticsDrawer.value.active = true;
+}
 // 更新表格数据
-function updateTableData() {
-  getAllData().then((res) => {
+async function updateTableData() {
+  await getAllData().then((res) => {
     tableData.value = resConversion(res);
   });
+
+    // 更新统计数据
+  tableData.value?.forEach(item=>{
+    // 总人数统计
+    statisticsData.value.headcount++;
+    // 男女统计
+    if(item.sex==='男'){
+      statisticsData.value.man++;
+    }else if(item.sex==='女'){
+      statisticsData.value.woman++;
+    }
+  })
+
 }
 
 // 把后端的数据转化一下，转化成前端友好的数据
