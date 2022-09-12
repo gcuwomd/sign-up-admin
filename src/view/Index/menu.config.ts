@@ -5,6 +5,7 @@ import { RouterLink } from "vue-router";
 import {
   FileTrayFullOutline as data,
   AlertCircleOutline as about,
+  ExitOutline as exit,
 } from "@vicons/ionicons5";
 
 // 图标渲染
@@ -40,6 +41,20 @@ const menuOptions: MenuOption[] = [
       ),
     key: "about",
     icon: renderIcon(about),
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: "Login",
+          },
+        },
+        { default: () => "退出" }
+      ),
+    key: "exit",
+    icon: renderIcon(exit),
   },
 ];
 

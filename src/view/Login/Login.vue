@@ -92,7 +92,7 @@ function handleClickLogin(e: MouseEvent) {
       login(formValue.value)
         .then((res) => {
           message.success("登录成功！");
-          router.push({ name: "Index" });
+          router.push({ name: "FormData" });
         })
         .catch((err) => {
           message.error("登录验证失败！");
