@@ -12,9 +12,22 @@
             placeholder="请输入要搜索的内容"
             :on-input="handleInput"
           />
-          <n-button type="success" @click="onRest"> 重置 </n-button>
-          <n-button type="info" @click="onExportExcelFile"> 一键导出 </n-button>
-          <n-button color="#ff69b4" @click="onStatistics">
+          <n-button type="info" @click="onRest">
+            <template #icon>
+              <n-icon>
+                <reset-icon></reset-icon>
+              </n-icon>
+            </template>
+            重置
+          </n-button>
+          <n-button type="success" @click="onExportExcelFile">
+            <template #icon>
+              <n-icon>
+                <excel-icon></excel-icon>
+              </n-icon> </template
+            >导出
+          </n-button>
+          <n-button color="#f3c468" @click="onStatistics">
             <template #icon>
               <n-icon>
                 <statistics></statistics>
@@ -36,10 +49,13 @@
     </n-layout>
   </n-space>
   <detail-dialog ref="detailDialog" :rowData="currentRowData"></detail-dialog>
-  <statistics-drawer ref="statisticsDrawer" :statisticsData="statisticsData"></statistics-drawer>
+  <statistics-drawer
+    ref="statisticsDrawer"
+    :statisticsData="statisticsData"
+  ></statistics-drawer>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, Ref,nextTick } from "vue";
+import { ref, onMounted, Ref, nextTick } from "vue";
 import { useMessage } from "naive-ui";
 import DetailDialog from "./DetailDialog.vue";
 import StatisticsDrawer from "./../Statistics/statistics.vue";
@@ -53,8 +69,12 @@ import {
 import { operationConfig } from "./formData.config";
 // 导入选择器配置
 import { options, createTableHead } from "./formData.config";
-import { IFormData, IBackFormData,IStatisticData } from "./data.type";
-import { PodiumOutline as statistics } from "@vicons/ionicons5";
+import { IFormData, IBackFormData, IStatisticData } from "./data.type";
+import {
+  PodiumOutline as statistics,
+  ReloadOutline as resetIcon,
+} from "@vicons/ionicons5";
+import { FileExcelOutlined as excelIcon } from "@vicons/antd";
 
 const message = useMessage(); // 消息提醒
 
@@ -72,16 +92,15 @@ let detailDialog = ref();
 // 统计抽屉
 let statisticsDrawer = ref();
 // 数据表数据
-let tableData:Ref<IFormData[]|undefined> = ref();
+let tableData: Ref<IFormData[] | undefined> = ref();
 // 统计数据
-let statisticsData:Ref<IStatisticData> =ref({
-  headcount:0,
-  man:0,
-  woman:0
+let statisticsData: Ref<IStatisticData> = ref({
+  headcount: 0,
+  man: 0,
+  woman: 0,
 });
 
 let currentRowData: Ref<Array<IFormData> | null> = ref(null);
-
 
 const tableHead = createTableHead({
   // 打开查看详细信息
@@ -150,18 +169,17 @@ async function updateTableData() {
     tableData.value = resConversion(res);
   });
 
-    // 更新统计数据
-  tableData.value?.forEach(item=>{
+  // 更新统计数据
+  tableData.value?.forEach((item) => {
     // 总人数统计
     statisticsData.value.headcount++;
     // 男女统计
-    if(item.sex==='男'){
+    if (item.sex === "男") {
       statisticsData.value.man++;
-    }else if(item.sex==='女'){
+    } else if (item.sex === "女") {
       statisticsData.value.woman++;
     }
-  })
-
+  });
 }
 
 // 把后端的数据转化一下，转化成前端友好的数据
