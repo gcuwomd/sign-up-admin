@@ -9,6 +9,10 @@ const NotFoundTime=3;
 // config.url 白名单（只返回data）
 const resHelperWhitelist=['/ExcelOut']
 
+// 数据展示页面配置
+const PAGE_Size=10;
+const EXCEL_NAME="网信委招新报名汇总";
+
 // 环境判定
 switch(import.meta.env.MODE){
     case "development":
@@ -23,4 +27,6 @@ export {
     baseUrl,
     resHelperWhitelist,
     NotFoundTime,
+    PAGE_Size,
+    EXCEL_NAME
 }

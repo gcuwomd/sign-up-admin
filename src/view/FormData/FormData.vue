@@ -70,6 +70,7 @@ import {
   queryByKV,
   excelFileExport,
 } from "./formData.api";
+import { PAGE_Size, EXCEL_NAME } from "../../const";
 import { operationConfig } from "./formData.config";
 // 导入选择器配置
 import { options, createTableHead } from "./formData.config";
@@ -84,7 +85,7 @@ const message = useMessage(); // 消息提醒
 
 // 分页器配置
 const pagination = {
-  pageSize: 8,
+  pageSize: PAGE_Size,
 };
 // 重置按钮的名称
 let resetBtnName = ref("刷新");
@@ -158,7 +159,7 @@ function onExportExcelFile() {
     let url = window.URL.createObjectURL(blob);
     const date = new Date();
     let fileName =
-      "test" +
+      EXCEL_NAME +
       `${date.getFullYear()}-` +
       `${date.getMonth() + 1}-` +
       `${date.getDate()}` +
