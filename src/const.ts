@@ -10,8 +10,14 @@ const NotFoundTime=3;
 const resHelperWhitelist=['/ExcelOut']
 
 // 数据展示页面配置
+// 分页大小设置
 const PAGE_Size=10;
+// EXCEL 导出文件名字配置
 const EXCEL_NAME="网信委招新报名汇总";
+
+// 关于页配置
+// 版本号
+const VERSION="1.1.0"
 
 // 环境判定
 switch(import.meta.env.MODE){
@@ -28,5 +34,6 @@ export {
     resHelperWhitelist,
     NotFoundTime,
     PAGE_Size,
-    EXCEL_NAME
+    EXCEL_NAME,
+    VERSION
 }

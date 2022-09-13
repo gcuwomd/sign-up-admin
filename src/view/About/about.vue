@@ -6,7 +6,7 @@
         <n-text>网信委招新报名系统后台</n-text>
       </n-h1>
       <n-h3>
-        <n-text>软件版本：V 1.0</n-text>
+        <n-text>软件版本：V {{ VERSION }}</n-text>
       </n-h3>
       <n-h3>
         <n-text>发行时间：2022.09.12</n-text>
@@ -17,6 +17,10 @@
     </n-space>
   </n-space>
 </template>
+<script lang="ts" setup>
+import { VERSION } from "../../const";
+</script>
+
 <style lang="scss" scoped>
 .container {
   height: calc(100vh - 57px - 23px - 23px);
