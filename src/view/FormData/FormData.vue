@@ -22,7 +22,7 @@
                 <reset-icon></reset-icon>
               </n-icon>
             </template>
-            重置
+            {{ resetBtnName }}
           </n-button>
           <n-button type="success" @click="onExportExcelFile">
             <template #icon>
@@ -86,7 +86,8 @@ const message = useMessage(); // 消息提醒
 const pagination = {
   pageSize: 8,
 };
-
+// 重置按钮的名称
+let resetBtnName = ref("刷新");
 // 选择器的绑定
 let selectValue = ref("第一志愿部门");
 // 搜索框绑定
@@ -132,6 +133,7 @@ function handleInput(value: string) {
   if (value == "") {
     updateTableData();
   } else {
+    resetBtnName.value = "重置";
     updateTableBySearch();
   }
 }
@@ -144,6 +146,7 @@ function handleUpdateValue(value: string, option: SelectOption) {
 // 点击重置按钮
 function onRest() {
   searchValue.value = "";
+  resetBtnName.value = "刷新";
   updateTableData();
 }
 
@@ -196,6 +199,7 @@ function updateTableBySearch() {
     tableData.value = resConversion(res);
   });
 }
+
 // 把后端的数据转化一下，转化成前端友好的数据
 function resConversion(res: any) {
   const data = Array.from(res, (item: IBackFormData) => {
