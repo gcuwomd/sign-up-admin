@@ -4,7 +4,11 @@
       <n-layout-header>
         <n-space align="center">
           <n-text>请选择要搜索的字段:</n-text>
-          <n-select v-model:value="selectValue" :options="options" />
+          <n-select
+            v-model:value="selectValue"
+            :options="options"
+            @update:value="handleUpdateValue"
+          />
           <n-text>请输入要搜索的内容:</n-text>
           <n-input
             v-model:value="searchValue"
@@ -56,7 +60,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, Ref, nextTick } from "vue";
-import { useMessage } from "naive-ui";
+import { useMessage, SelectOption } from "naive-ui";
 import DetailDialog from "./DetailDialog.vue";
 import StatisticsDrawer from "./../Statistics/statistics.vue";
 import {
@@ -128,9 +132,13 @@ function handleInput(value: string) {
   if (value == "") {
     updateTableData();
   } else {
-    queryByKV(selectValue.value, value).then((res) => {
-      tableData.value = resConversion(res);
-    });
+    updateTableBySearch();
+  }
+}
+// 选择框更新事件
+function handleUpdateValue(value: string, option: SelectOption) {
+  if (searchValue.value !== "") {
+    updateTableBySearch();
   }
 }
 // 点击重置按钮
@@ -182,6 +190,12 @@ async function updateTableData() {
   });
 }
 
+// 搜索信息更新表格数据
+function updateTableBySearch() {
+  queryByKV(selectValue.value, searchValue.value).then((res) => {
+    tableData.value = resConversion(res);
+  });
+}
 // 把后端的数据转化一下，转化成前端友好的数据
 function resConversion(res: any) {
   const data = Array.from(res, (item: IBackFormData) => {
