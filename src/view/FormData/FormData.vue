@@ -180,7 +180,9 @@ async function updateTableData() {
   await getAllData().then((res) => {
     tableData.value = resConversion(res);
   });
-
+  statisticsData.value.headcount = 0;
+  statisticsData.value.man = 0;
+  statisticsData.value.woman = 0;
   // 更新统计数据
   tableData.value?.forEach((item) => {
     // 总人数统计
