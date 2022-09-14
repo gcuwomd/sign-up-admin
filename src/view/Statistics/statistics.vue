@@ -1,42 +1,48 @@
 <template>
   <n-drawer v-model:show="active" width="25vw" :placement="placement">
     <n-drawer-content title="统计">
-      <n-space justify="center">
-        <n-card size="small">
-          <n-text>报名总数</n-text>
-          <n-space justify="center">
-            <n-statistic tabular-nums>
-              <n-number-animation
-                ref="numberAnimationInstRef"
-                :from="0"
-                :to="statisticsData.headcount"
-              />
-              <template #suffix> 个人报名 </template>
-            </n-statistic>
-          </n-space>
-        </n-card>
-        <n-card title="男女比例" size="small">
-          <n-space justify="center" align="center">
-            <n-icon size="40" color="#3c80f2">
-              <people></people>
-            </n-icon>
-            <n-text>{{ statisticsData.man }}</n-text>
-            <n-text strong style="font-size: 20px">/</n-text>
-            <n-icon size="40" color="#dc2556">
-              <people></people>
-            </n-icon>
-            <n-text>{{ statisticsData.woman }}</n-text>
-          </n-space>
-        </n-card>
-      </n-space>
+      <n-scrollbar style="max-height: 100vh">
+        <n-space justify="center">
+          <n-card size="small">
+            <n-text>报名总数</n-text>
+            <n-space justify="center">
+              <n-statistic tabular-nums>
+                <n-number-animation
+                  ref="numberAnimationInstRef"
+                  :from="0"
+                  :to="statisticsData.headcount"
+                />
+                <template #suffix> 个人报名 </template>
+              </n-statistic>
+            </n-space>
+          </n-card>
+          <n-card title="男女比例" size="small">
+            <n-space justify="center" align="center">
+              <n-icon size="40" color="#3c80f2">
+                <people></people>
+              </n-icon>
+              <n-text>{{ statisticsData.man }}</n-text>
+              <n-text strong style="font-size: 20px">/</n-text>
+              <n-icon size="40" color="#dc2556">
+                <people></people>
+              </n-icon>
+              <n-text>{{ statisticsData.woman }}</n-text>
+            </n-space>
+          </n-card>
+          <n-card title="各部门志愿分布" size="small">
+            <div ref="chartRef"></div>
+          </n-card>
+        </n-space>
+      </n-scrollbar>
     </n-drawer-content>
   </n-drawer>
 </template>
 <script lang="ts" setup>
-import { ref, Ref, onMounted, defineExpose, defineProps } from "vue";
+import { ref, nextTick, watch, defineExpose, defineProps } from "vue";
 import { IStatisticData } from "./../FormData/data.type";
 import { BodySharp as people } from "@vicons/ionicons5";
 import type { DrawerPlacement } from "naive-ui";
+import { draw } from "./draw";
 const placement = ref<DrawerPlacement>("right");
 let active = ref(false);
 const props = defineProps<{
@@ -45,7 +51,18 @@ const props = defineProps<{
 defineExpose({
   active,
 });
+
+let chartRef = ref(null);
+
+watch(active, (newValue, oldValue) => {
+  if (newValue) {
+    nextTick(() => {
+      draw(chartRef.value!, props.statisticsData.department);
+    });
+  }
+});
 </script>
+
 <style lang="scss" scoped>
 .n-card {
   width: 20vw;

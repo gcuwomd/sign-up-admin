@@ -1,58 +1,25 @@
-import Chart from 'chart.js/auto';
-import {SEX_LABELS,COLLEGE_LABELS,COLLEGE_COLORS} from './statistics.const'
+import { Bar } from '@antv/g2plot';
 
-// 男女统计图
-export function drawSex(el:HTMLCanvasElement,data:Array<number>) {
-    new Chart(el,{
-        type: 'bar',
-        data:{
-            datasets:[{
-                data,
-                backgroundColor:["rgba(166, 208, 246)","rgba(250, 178, 193)"]
-            }],
+
+export function draw(el:HTMLDivElement,data:any){
+    new Bar(el, {
+        data,
+        isGroup: true,
+        xField: 'value',
+        yField: 'label',
+        seriesField: 'type',
+        marginRatio: 0,
+        label: {
+          // 可手动配置 label 数据标签位置
+          position: 'middle', // 'left', 'middle', 'right'
+          offset: 4,
         },
-        options: {
-            scales: {
-                x: {
-                    type: 'category',
-                    labels: SEX_LABELS,
-                },
-                y:{
-                    suggestedMax:Math.max(...data)
-                },
-            },
-            plugins:{
-                legend:{
-                    display: false,
-                }
-            },
-            responsive:true,
-        }
-        
-    })
+        legend: {
+          layout: 'horizontal',
+          position: 'top'
+        },
+        barStyle: { radius: [2, 2, 0, 0] },
+      }).render();
 }
 
-// 各学院占比统计
-export function drawCollege(el:HTMLCanvasElement,data:Array<number>){
-    new Chart(el,{
-        type: 'doughnut',
-        data:{
-            labels: COLLEGE_LABELS,
-            datasets:[{
-                data,
-                backgroundColor:COLLEGE_COLORS
-            }]
-        },options:{
-            radius:"100%",
-            cutout:"70%",
-            plugins:{
-                legend:{
-                    display: false,
-                    position:"right"
-                }
-            },
-            responsive:true,
-            
-        }
-    })
-}
+

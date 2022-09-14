@@ -73,13 +73,20 @@ import {
 import { PAGE_Size, EXCEL_NAME } from "../../const";
 import { operationConfig } from "./formData.config";
 // 导入选择器配置
-import { options, createTableHead } from "./formData.config";
-import { IFormData, IBackFormData, IStatisticData } from "./data.type";
+import { options, createTableHead, drawData } from "./formData.config";
+import {
+  IFormData,
+  IBackFormData,
+  IStatisticData,
+  DepartmentName,
+  DrawData,
+} from "./data.type";
 import {
   PodiumOutline as statistics,
   ReloadOutline as resetIcon,
 } from "@vicons/ionicons5";
 import { FileExcelOutlined as excelIcon } from "@vicons/antd";
+import { draw } from "../statistics/draw";
 
 const message = useMessage(); // 消息提醒
 
@@ -104,6 +111,7 @@ let statisticsData: Ref<IStatisticData> = ref({
   headcount: 0,
   man: 0,
   woman: 0,
+  department: [],
 });
 
 let currentRowData: Ref<Array<IFormData> | null> = ref(null);
@@ -180,11 +188,17 @@ async function updateTableData() {
   await getAllData().then((res) => {
     tableData.value = resConversion(res);
   });
+  // 统计初始化
   statisticsData.value.headcount = 0;
   statisticsData.value.man = 0;
   statisticsData.value.woman = 0;
+  drawData.forEach((item) => {
+    item.value = 0;
+  });
   // 更新统计数据
   tableData.value?.forEach((item) => {
+    console.log(item.name);
+
     // 总人数统计
     statisticsData.value.headcount++;
     // 男女统计
@@ -193,7 +207,29 @@ async function updateTableData() {
     } else if (item.sex === "女") {
       statisticsData.value.woman++;
     }
+    // 部门报名数据
+    // 意向1
+    if (item.intention1 === DepartmentName.Website) {
+      drawData[0].value++;
+    } else if (item.intention1 === DepartmentName.Administeration) {
+      drawData[2].value++;
+    } else if (item.intention1 === DepartmentName.Informatization) {
+      drawData[4].value++;
+    } else if (item.intention1 === DepartmentName.Network) {
+      drawData[6].value++;
+    }
+    // 意向2
+    if (item.intention2 === DepartmentName.Website) {
+      drawData[1].value++;
+    } else if (item.intention2 === DepartmentName.Administeration) {
+      drawData[3].value++;
+    } else if (item.intention2 === DepartmentName.Informatization) {
+      drawData[5].value++;
+    } else if (item.intention2 === DepartmentName.Network) {
+      drawData[7].value++;
+    }
   });
+  statisticsData.value.department = drawData;
 }
 
 // 搜索信息更新表格数据

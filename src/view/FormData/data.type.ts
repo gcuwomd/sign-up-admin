@@ -18,14 +18,34 @@ export interface IBackFormData extends IFormData {
     bool:any
 }
 
+type DepartmentCollection ={
+    website:number,
+    administeration:number,
+    informatization:number,
+    network:number,
+}
+
+export enum DepartmentName {
+    Website="网站运维部",
+    Administeration="行政秘书部",
+    Informatization="信息化运维部",
+    Network="网络运维部"
+}
+export type DrawData={
+    label: string,
+    type: string,
+    value: number
+}
 export interface IStatisticData{
     headcount:number,
     man:number,
     woman:number,
-    department?:[{
-        name:string,
-        count:number,
-    }]
-    intention1?:[string,number],
-    intention2?:[string,number],
+    department:DrawData[]
 }
+
+export enum Legend{
+    Intention1="第一志愿",
+    Intention2="第二志愿"
+}
+
+

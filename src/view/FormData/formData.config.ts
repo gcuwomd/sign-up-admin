@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { NButton, NEllipsis } from "naive-ui";
 import type { DataTableColumns } from "naive-ui";
-import { IFormData } from "./data.type";
+import { IFormData,DrawData,DepartmentName,Legend } from "./data.type";
 // 搜索下拉配置
 export const options = [
   {
@@ -156,3 +156,39 @@ export const createTableHead = ({
     },
   ];
 };
+// 统计部门数据的数据模板
+export let drawData:DrawData[] =[
+  {
+    label: DepartmentName.Website,
+    type:Legend.Intention1,
+    value:0
+  },{
+    label: DepartmentName.Website,
+    type:Legend.Intention2,
+    value:0
+  },{
+    label: DepartmentName.Administeration,
+    type:Legend.Intention1,
+    value:0
+  },{
+    label: DepartmentName.Administeration,
+    type:Legend.Intention2,
+    value:0
+  },{
+    label: DepartmentName.Informatization,
+    type:Legend.Intention1,
+    value:0
+  },{
+    label: DepartmentName.Informatization,
+    type:Legend.Intention2,
+    value:0
+  },{
+    label: DepartmentName.Network,
+    type:Legend.Intention1,
+    value:0
+  },{
+    label: DepartmentName.Network,
+    type:Legend.Intention2,
+    value:0
+  }
+]
