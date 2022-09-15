@@ -12,6 +12,13 @@ function deleteQuestionnaireById(id: string){
     }).then(ResHelper);
 }
 
+// 删除图片
+function deleteQuestionnairePicture(id:string){
+    return BaseAxios.post("/deletePic",{
+        id
+    }).then(ResHelper);
+}
+
 // 根据键值对来查询模糊查询
 function queryByKV(key: string,value: string){
     return BaseAxios.post("/selectByKV",{
@@ -38,6 +45,7 @@ export {
     getAllData, 
     getPicture,
     deleteQuestionnaireById,
+    deleteQuestionnairePicture,
     queryByKV,
     excelFileExport
 };

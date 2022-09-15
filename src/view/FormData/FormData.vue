@@ -4,18 +4,9 @@
       <n-layout-header>
         <n-space align="center">
           <n-text>请选择要搜索的字段:</n-text>
-          <n-select
-            v-model:value="selectValue"
-            :options="options"
-            @update:value="handleUpdateValue"
-          />
+          <n-select v-model:value="selectValue" :options="options" @update:value="handleUpdateValue" />
           <n-text>请输入要搜索的内容:</n-text>
-          <n-input
-            v-model:value="searchValue"
-            type="text"
-            placeholder="请输入要搜索的内容"
-            :on-input="handleInput"
-          />
+          <n-input v-model:value="searchValue" type="text" placeholder="请输入要搜索的内容" :on-input="handleInput" />
           <n-button type="info" @click="onRest">
             <template #icon>
               <n-icon>
@@ -28,8 +19,8 @@
             <template #icon>
               <n-icon>
                 <excel-icon></excel-icon>
-              </n-icon> </template
-            >导出
+              </n-icon>
+            </template>导出
           </n-button>
           <n-button color="#f3c468" @click="onStatistics">
             <template #icon>
@@ -37,26 +28,18 @@
                 <statistics></statistics>
               </n-icon>
             </template>
-            统计</n-button
-          >
+            统计
+          </n-button>
         </n-space>
       </n-layout-header>
       <n-layout-content content-style="padding: 24px;">
-        <n-data-table
-          :columns="tableHead"
-          :data="tableData"
-          :pagination="pagination"
-          max-height="90%"
-          :scroll-x="1800"
-        />
+        <n-data-table :columns="tableHead" :data="tableData" :pagination="pagination" max-height="90%"
+          :scroll-x="1800" />
       </n-layout-content>
     </n-layout>
   </n-space>
   <detail-dialog ref="detailDialog" :rowData="currentRowData"></detail-dialog>
-  <statistics-drawer
-    ref="statisticsDrawer"
-    :statisticsData="statisticsData"
-  ></statistics-drawer>
+  <statistics-drawer ref="statisticsDrawer" :statisticsData="statisticsData"></statistics-drawer>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, Ref, nextTick } from "vue";
@@ -67,6 +50,7 @@ import {
   getAllData,
   getPicture,
   deleteQuestionnaireById,
+  deleteQuestionnairePicture,
   queryByKV,
   excelFileExport,
 } from "./formData.api";
@@ -124,14 +108,18 @@ const tableHead = createTableHead({
   },
   // 点击删除问卷
   deleteItem(rowId: number) {
-    deleteQuestionnaireById(rowId + "")
-      .then(() => {
-        message.success("删除成功");
-        updateTableData(); // 更新表格
-      })
-      .catch((e) => {
-        message.error("删除失败");
-      });
+    getPicture(rowId).then(res => {
+      if (res.length == 0) {
+        // 没图片
+        deleteQuestionnaire(rowId);
+      } else {
+        deleteQuestionnairePicture(res[0].id + "").then(() => {
+          deleteQuestionnaire(rowId)
+        }).catch((e) => {
+          message.error("删除失败");
+        })
+      }
+    })
   },
 });
 
@@ -238,6 +226,17 @@ function updateTableBySearch() {
     tableData.value = resConversion(res);
   });
 }
+// 删除问卷通过id
+function deleteQuestionnaire(rowId: number) {
+  deleteQuestionnaireById(rowId + "")
+    .then(() => {
+      message.success("删除成功");
+      updateTableData(); // 更新表格
+    })
+    .catch((e) => {
+      message.error("删除失败");
+    });
+}
 
 // 把后端的数据转化一下，转化成前端友好的数据
 function resConversion(res: any) {
@@ -255,9 +254,11 @@ function resConversion(res: any) {
 .n-layout-footer {
   padding: 24px;
 }
+
 .n-select {
   min-width: 200px;
 }
+
 .n-data-table {
   height: calc(100vh - 180px - 57px);
 }
