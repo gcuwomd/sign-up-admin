@@ -134,7 +134,7 @@ export const createTableHead = ({
             NButton,
             {
               size: "small",
-              color:operation===operationConfig[0]?"#3c80f2":"#c63351",
+              color:operation===operationConfig[0]?"#3c80f2":"#d6d6d6",
               ghost:true,
               style:{
                 "margin-right":operation===operationConfig[0]?"15px":"0px",
